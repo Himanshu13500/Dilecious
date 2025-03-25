@@ -1835,9 +1835,7 @@ nav a {
         width: 85%;
         max-width: 320px;
         height: 100vh;
-        background: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        background: #ffffff;
         padding: 80px 20px 20px;
         transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         z-index: 1001;
@@ -1928,8 +1926,6 @@ nav a {
         z-index: 1000;
         opacity: 0;
         transition: opacity 0.3s ease;
-        backdrop-filter: blur(3px);
-        -webkit-backdrop-filter: blur(3px);
     }
 
     .menu-overlay.active {
