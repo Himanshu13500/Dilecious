@@ -65,17 +65,24 @@ header {
     box-sizing: border-box;
 }
 
-.logo-container {
+/* Combined container for logo and navigation */
+.header-container {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    padding: 5px 0;
-    text-align: center;
     background: white;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 1002;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-container {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid rgba(196, 164, 132, 0.2);
 }
 
 .logo {
@@ -89,14 +96,9 @@ header {
 
 .nav-container {
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
     padding: 10px;
     background: white;
     border-radius: 0 0 10px 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    z-index: 1001;
 }
 
 nav {
@@ -146,12 +148,20 @@ nav a i {
         padding: 5px 10px;
     }
 
-    .logo-container, .nav-container {
-        padding: 5px;
+    .header-container {
+        border-radius: 8px;
+    }
+
+    .logo-container {
+        padding: 8px 0;
     }
 
     .logo img {
         height: 35px;
+    }
+
+    .nav-container {
+        padding: 8px;
     }
 
     nav {
