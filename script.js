@@ -13,6 +13,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const nav = document.querySelector('nav');
     const navLinks = document.querySelectorAll('nav a');
+    let currentSection = 'home';
+
+    // Update active section based on scroll position
+    function updateActiveSection() {
+        const sections = document.querySelectorAll('section');
+        const scrollPosition = window.scrollY + 100;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionHeight = section.offsetHeight;
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSection = section.id;
+                updateActiveLink();
+            }
+        });
+    }
+
+    // Update active link in navigation
+    function updateActiveLink() {
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    }
 
     // Toggle menu function
     function toggleMenu() {
@@ -32,11 +59,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     overlay.addEventListener('click', toggleMenu);
 
-    // Close menu when clicking a link
+    // Handle navigation clicks
     navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (nav.classList.contains('active')) {
-                toggleMenu();
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            
+            if (targetSection) {
+                // Close menu if open
+                if (nav.classList.contains('active')) {
+                    toggleMenu();
+                }
+
+                // Smooth scroll to section
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+
+                // Update active section
+                currentSection = targetId;
+                updateActiveLink();
             }
         });
     });
@@ -59,6 +103,21 @@ document.addEventListener("DOMContentLoaded", function () {
     nav.addEventListener('click', function(e) {
         e.stopPropagation();
     });
+
+    // Update active section on scroll
+    window.addEventListener('scroll', () => {
+        updateActiveSection();
+    });
+
+    // Initial active section update
+    updateActiveSection();
+
+    // Prevent pull-to-refresh on Android
+    document.body.addEventListener('touchmove', function(e) {
+        if (nav.classList.contains('active')) {
+            e.preventDefault();
+        }
+    }, { passive: false });
 
     // Header Scroll Effect
     window.addEventListener("scroll", function() {
