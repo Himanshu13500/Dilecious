@@ -1835,6 +1835,7 @@ nav a {
     }
 
     nav ul {
+        display: flex;
         flex-direction: column;
         gap: 10px;
         padding: 0;
@@ -1856,39 +1857,6 @@ nav a {
 
     nav ul li a:hover {
         background: rgba(196, 164, 132, 0.1);
-    }
-
-    /* Contact Section Mobile Optimization */
-    .contact-container {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 0;
-    }
-
-    .contact-info, .contact-form {
-        width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-        margin: 0;
-    }
-
-    .contact-item {
-        padding: 15px;
-        margin-bottom: 15px;
-    }
-
-    .contact-form input,
-    .contact-form textarea,
-    .contact-form select {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 15px;
-        box-sizing: border-box;
-    }
-
-    .contact-form button {
-        width: 100%;
-        padding: 12px 20px;
     }
 
     /* Prevent body scroll when menu is open */
