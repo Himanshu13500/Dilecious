@@ -1,15 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Create menu toggle button
-    const menuToggle = document.createElement('button');
-    menuToggle.className = 'menu-toggle';
-    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    document.querySelector('header').appendChild(menuToggle);
-
-    // Create overlay
-    const menuOverlay = document.createElement('div');
-    menuOverlay.className = 'menu-overlay';
-    document.body.appendChild(menuOverlay);
-
     const nav = document.querySelector('nav');
     const navLinks = document.querySelectorAll('nav a');
     let currentSection = 'home';
@@ -40,24 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Toggle menu function
-    function toggleMenu() {
-        nav.classList.toggle('active');
-        menuOverlay.classList.toggle('active');
-        document.body.classList.toggle('menu-open');
-        menuToggle.innerHTML = nav.classList.contains('active') 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
-    }
-
-    // Event listeners
-    menuToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMenu();
-    });
-
-    menuOverlay.addEventListener('click', toggleMenu);
-
     // Handle navigation clicks
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
@@ -67,30 +38,8 @@ document.addEventListener("DOMContentLoaded", function () {
             
             if (targetSection) {
                 targetSection.scrollIntoView({ behavior: 'smooth' });
-                if (nav.classList.contains('active')) {
-                    toggleMenu();
-                }
             }
         });
-    });
-
-    // Close menu on window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 768 && nav.classList.contains('active')) {
-            toggleMenu();
-        }
-    });
-
-    // Handle orientation change
-    window.addEventListener('orientationchange', () => {
-        if (nav.classList.contains('active')) {
-            toggleMenu();
-        }
-    });
-
-    // Prevent menu from closing when clicking inside nav
-    nav.addEventListener('click', function(e) {
-        e.stopPropagation();
     });
 
     // Update active section on scroll with debounce
@@ -104,13 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initial active section update
     updateActiveSection();
-
-    // Prevent pull-to-refresh on Android
-    document.body.addEventListener('touchmove', function(e) {
-        if (nav.classList.contains('active')) {
-            e.preventDefault();
-        }
-    }, { passive: false });
 
     // Header Scroll Effect
     window.addEventListener("scroll", function() {
