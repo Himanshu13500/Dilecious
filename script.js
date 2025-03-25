@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     overlay.addEventListener('click', toggleMenu);
 
-    // Handle navigation clicks
+    // Handle navigation clicks with improved scrolling
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -72,10 +72,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     toggleMenu();
                 }
 
+                // Calculate the target position
+                const headerOffset = 80; // Adjust this value based on your header height
+                const elementPosition = targetSection.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
                 // Smooth scroll to section
-                targetSection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
                 });
 
                 // Update active section
@@ -104,9 +109,13 @@ document.addEventListener("DOMContentLoaded", function () {
         e.stopPropagation();
     });
 
-    // Update active section on scroll
+    // Update active section on scroll with debounce
+    let scrollTimeout;
     window.addEventListener('scroll', () => {
-        updateActiveSection();
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            updateActiveSection();
+        }, 100);
     });
 
     // Initial active section update
