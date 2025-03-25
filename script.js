@@ -10,14 +10,35 @@ document.addEventListener("DOMContentLoaded", function () {
     nav.prepend(menuToggle);
 
     const navMenu = document.querySelector('nav ul');
+    const navItems = navMenu.querySelectorAll('li');
     let isMenuOpen = false;
 
-    // Toggle menu function
+    // Add index to nav items for staggered animation
+    navItems.forEach((item, index) => {
+        item.style.setProperty('--item-index', index);
+    });
+
+    // Toggle menu function with animation
     function toggleMenu() {
         isMenuOpen = !isMenuOpen;
         navMenu.classList.toggle('active');
         document.body.classList.toggle('menu-open');
         menuToggle.innerHTML = isMenuOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+        
+        // Animate menu items
+        if (isMenuOpen) {
+            navItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 100 * index);
+            });
+        } else {
+            navItems.forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+            });
+        }
     }
 
     // Event listeners for menu
@@ -47,6 +68,33 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isMenuOpen && window.innerWidth > 768) {
             toggleMenu();
         }
+    });
+
+    // Handle scroll lock
+    function setScrollLock(locked) {
+        if (locked) {
+            document.body.style.overflow = 'hidden';
+            document.body.style.height = '100vh';
+        } else {
+            document.body.style.overflow = '';
+            document.body.style.height = '';
+        }
+    }
+
+    // Update scroll lock when menu state changes
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.target.classList.contains('menu-open')) {
+                setScrollLock(true);
+            } else {
+                setScrollLock(false);
+            }
+        });
+    });
+
+    observer.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class']
     });
 
     // Header Scroll Effect
