@@ -25,7 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Event listeners
-    menuToggle.addEventListener('click', toggleMenu);
+    menuToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
     overlay.addEventListener('click', toggleMenu);
 
     // Close menu when clicking a link
@@ -49,6 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (nav.classList.contains('active')) {
             toggleMenu();
         }
+    });
+
+    // Prevent menu from closing when clicking inside nav
+    nav.addEventListener('click', function(e) {
+        e.stopPropagation();
     });
 
     // Header Scroll Effect

@@ -812,9 +812,10 @@ footer::before {
 /* Contact Section */
 #contact.box {
     max-width: 1200px;
-    padding: 40px;
+    padding: 40px 20px;
     margin: 40px auto;
     background: linear-gradient(135deg, #fff, #f8f8f8);
+    box-sizing: border-box;
 }
 
 .contact-container {
@@ -825,6 +826,8 @@ footer::before {
     align-items: start;
     max-width: 1100px;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .contact-info {
@@ -833,6 +836,8 @@ footer::before {
     background: white;
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .contact-info h3 {
@@ -889,6 +894,8 @@ footer::before {
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .contact-form h3 {
@@ -1826,6 +1833,8 @@ nav a {
         transition: right 0.3s ease-in-out;
         z-index: 1001;
         box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     nav.active {
@@ -1910,10 +1919,13 @@ nav a {
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
         z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
     .menu-overlay.active {
         display: block;
+        opacity: 1;
     }
 }
 
