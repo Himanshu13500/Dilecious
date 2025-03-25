@@ -177,6 +177,21 @@ nav a i {
         font-size: 0.85em;
         padding: 6px 10px;
     }
+
+    .highlight {
+        margin-top: 160px; /* Adjusted for mobile */
+        padding: 30px;
+        width: 90%;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-image {
+        max-width: 400px;
+        margin: 0 auto;
+    }
 }
 
 @media (max-width: 480px) {
@@ -191,6 +206,16 @@ nav a i {
 
     nav a i {
         font-size: 0.9em;
+    }
+
+    .highlight {
+        margin-top: 150px; /* Further adjusted for smaller screens */
+        padding: 20px;
+        width: 95%;
+    }
+
+    .hero-content h1 {
+        font-size: 2em;
     }
 }
 
@@ -247,7 +272,7 @@ nav a i {
     max-width: 1200px;
     position: relative;
     overflow: hidden;
-    margin-top: 120px;
+    margin-top: 180px; /* Increased margin to prevent overlap with header */
     display: grid;
     grid-template-columns: 1fr;
     gap: 40px;
@@ -2021,7 +2046,7 @@ body.menu-open {
 
 /* Adjust hero section margin to account for header */
 .highlight {
-    margin-top: 120px;
+    margin-top: 180px; /* Increased margin to prevent overlap with header */
 }
 
 /* Ensure proper spacing for all sections */
