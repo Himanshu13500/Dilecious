@@ -29,15 +29,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Handle navigation clicks
+    // Handle navigation clicks with smooth scroll
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', function(e) {
             e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
+            const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                targetSection.scrollIntoView({ behavior: 'smooth' });
+                window.scrollTo({
+                    top: targetSection.offsetTop - 100,
+                    behavior: 'smooth'
+                });
             }
         });
     });
@@ -64,22 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Smooth Scroll for All Navigation Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
     // Image Lazy Loading
-    const images = document.querySelectorAll('img');
+    const images = document.querySelectorAll('img[data-src]');
     const imageOptions = {
         threshold: 0.1,
         rootMargin: "0px 0px 50px 0px"
@@ -96,11 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }, imageOptions);
 
-    images.forEach(img => {
-        if (img.dataset.src) {
-            imageObserver.observe(img);
-        }
-    });
+    images.forEach(img => imageObserver.observe(img));
 
     // Animate sections on scroll
     const sections = document.querySelectorAll('section');
@@ -118,20 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }, sectionOptions);
 
-    sections.forEach(section => {
-        sectionObserver.observe(section);
-    });
-
-    // Dropdown Menu Functionality
-    const dropdown = document.querySelector(".dropdown");
-    if (dropdown) {
-    dropdown.addEventListener("mouseover", function () {
-        this.querySelector(".dropdown-menu").style.display = "block";
-    });
-    dropdown.addEventListener("mouseleave", function () {
-        this.querySelector(".dropdown-menu").style.display = "none";
-    });
-    }
+    sections.forEach(section => sectionObserver.observe(section));
 
     // FAQ Toggle Functionality
     const faqItems = document.querySelectorAll(".faq-item");
