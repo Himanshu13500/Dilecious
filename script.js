@@ -1,104 +1,59 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Mobile Menu Setup
-    const header = document.querySelector('header');
+    // Create menu toggle button
     const menuToggle = document.createElement('button');
     menuToggle.className = 'menu-toggle';
     menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    menuToggle.setAttribute('aria-label', 'Toggle navigation menu');
-    
+    menuToggle.setAttribute('aria-label', 'Toggle menu');
+    document.querySelector('header').appendChild(menuToggle);
+
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'menu-overlay';
+    document.body.appendChild(overlay);
+
     const nav = document.querySelector('nav');
-    nav.prepend(menuToggle);
+    const navLinks = document.querySelectorAll('nav a');
 
-    const navMenu = document.querySelector('nav ul');
-    const navItems = navMenu.querySelectorAll('li');
-    let isMenuOpen = false;
-
-    // Add index to nav items for staggered animation
-    navItems.forEach((item, index) => {
-        item.style.setProperty('--item-index', index);
-    });
-
-    // Toggle menu function with animation
+    // Toggle menu function
     function toggleMenu() {
-        isMenuOpen = !isMenuOpen;
-        navMenu.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
         document.body.classList.toggle('menu-open');
-        menuToggle.innerHTML = isMenuOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        
-        // Animate menu items
-        if (isMenuOpen) {
-            navItems.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateX(0)';
-                }, 100 * index);
-            });
-        } else {
-            navItems.forEach(item => {
-                item.style.opacity = '0';
-                item.style.transform = 'translateX(-20px)';
-            });
-        }
+        menuToggle.innerHTML = nav.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
     }
 
-    // Event listeners for menu
-    menuToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleMenu();
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (isMenuOpen && !nav.contains(e.target)) {
-            toggleMenu();
-        }
-    });
+    // Event listeners
+    menuToggle.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
 
     // Close menu when clicking a link
-    navMenu.querySelectorAll('a').forEach(link => {
+    navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            if (isMenuOpen) {
+            if (nav.classList.contains('active')) {
                 toggleMenu();
             }
         });
     });
 
-    // Close menu on resize (if open)
+    // Close menu on window resize if open
     window.addEventListener('resize', () => {
-        if (isMenuOpen && window.innerWidth > 768) {
+        if (window.innerWidth > 768 && nav.classList.contains('active')) {
             toggleMenu();
         }
     });
 
-    // Handle scroll lock
-    function setScrollLock(locked) {
-        if (locked) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.height = '100vh';
-        } else {
-            document.body.style.overflow = '';
-            document.body.style.height = '';
+    // Handle orientation change
+    window.addEventListener('orientationchange', () => {
+        if (nav.classList.contains('active')) {
+            toggleMenu();
         }
-    }
-
-    // Update scroll lock when menu state changes
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.target.classList.contains('menu-open')) {
-                setScrollLock(true);
-            } else {
-                setScrollLock(false);
-            }
-        });
-    });
-
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['class']
     });
 
     // Header Scroll Effect
     window.addEventListener("scroll", function() {
+        const header = document.querySelector("header");
         if (window.scrollY > 50) {
             header.classList.add("scrolled");
         } else {
@@ -106,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Smooth Scroll for Navigation Links
+    // Smooth Scroll for All Navigation Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -191,13 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             alert("Please enter a valid email address.");
         }
-    });
-
-    // Handle orientation change
-    window.addEventListener('orientationchange', () => {
-        navMenu.classList.remove('active');
-        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        document.body.style.overflow = '';
     });
 });
 
