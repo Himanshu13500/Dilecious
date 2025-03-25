@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const menuToggle = document.createElement('button');
     menuToggle.className = 'menu-toggle';
     menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    menuToggle.setAttribute('aria-label', 'Toggle menu');
     document.querySelector('header').appendChild(menuToggle);
 
     // Create overlay
@@ -43,20 +42,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Toggle menu function
     function toggleMenu() {
-        const body = document.body;
-        const isOpen = nav.classList.contains('active');
-        
-        if (!isOpen) {
-            nav.classList.add('active');
-            menuOverlay.classList.add('active');
-            body.classList.add('menu-open');
-            menuToggle.innerHTML = '<i class="fas fa-times"></i>';
-        } else {
-            nav.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            body.classList.remove('menu-open');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-        }
+        nav.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+        menuToggle.innerHTML = nav.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
     }
 
     // Event listeners
@@ -67,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     menuOverlay.addEventListener('click', toggleMenu);
 
-    // Handle navigation clicks with improved scrolling
+    // Handle navigation clicks
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -75,38 +66,18 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetSection = document.getElementById(targetId);
             
             if (targetSection) {
-                // Close menu if open
+                targetSection.scrollIntoView({ behavior: 'smooth' });
                 if (nav.classList.contains('active')) {
                     toggleMenu();
                 }
-
-                // Calculate the target position
-                const headerOffset = 80; // Adjust this value based on your header height
-                const elementPosition = targetSection.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                // Smooth scroll to section
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-
-                // Update active section
-                currentSection = targetId;
-                updateActiveLink();
             }
         });
     });
 
-    // Close menu on window resize if open
+    // Close menu on window resize
     window.addEventListener('resize', () => {
-        if (window.innerWidth > 768) {
-            const nav = document.querySelector('nav');
-            const body = document.body;
-            nav.classList.remove('active');
-            menuOverlay.classList.remove('active');
-            body.classList.remove('menu-open');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        if (window.innerWidth > 768 && nav.classList.contains('active')) {
+            toggleMenu();
         }
     });
 
