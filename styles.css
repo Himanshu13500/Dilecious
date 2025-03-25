@@ -74,6 +74,13 @@ header {
     background: white;
     border-radius: 10px 10px 0 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1002;
+    transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+    transform: translateY(-5px);
 }
 
 .logo {
@@ -83,6 +90,11 @@ header {
 .logo img {
     height: 50px;
     vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+    transform: scale(1.1);
 }
 
 .nav-container {
@@ -93,11 +105,14 @@ header {
     background: white;
     border-radius: 0 0 10px 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1001;
 }
 
 nav {
     width: 100%;
     padding: 10px 0;
+    display: block !important;
 }
 
 .nav-table {
@@ -152,6 +167,7 @@ nav a i {
 
     nav {
         padding: 8px 0;
+        display: block !important;
     }
 
     .nav-table {
@@ -1971,4 +1987,35 @@ nav a {
     nav ul li a {
         padding: 12px 20px;
     }
+}
+
+/* Remove any fixed positioning that might hide navigation */
+nav {
+    position: static !important;
+    right: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Ensure navigation is always visible */
+nav ul {
+    display: flex !important;
+    position: static !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+
+/* Remove any body scroll locking */
+body.menu-open {
+    overflow: visible !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
 }
