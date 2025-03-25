@@ -7,9 +7,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector('header').appendChild(menuToggle);
 
     // Create overlay
-    const overlay = document.createElement('div');
-    overlay.className = 'menu-overlay';
-    document.body.appendChild(overlay);
+    const menuOverlay = document.createElement('div');
+    menuOverlay.className = 'menu-overlay';
+    document.body.appendChild(menuOverlay);
 
     const nav = document.querySelector('nav');
     const navLinks = document.querySelectorAll('nav a');
@@ -43,21 +43,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Toggle menu function
     function toggleMenu() {
-        nav.classList.toggle('active');
-        overlay.classList.toggle('active');
-        document.body.classList.toggle('menu-open');
-        menuToggle.innerHTML = nav.classList.contains('active') 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
+        const body = document.body;
+        const isOpen = nav.classList.contains('active');
+        
+        if (!isOpen) {
+            nav.classList.add('active');
+            menuOverlay.classList.add('active');
+            body.classList.add('menu-open');
+            menuToggle.innerHTML = '<i class="fas fa-times"></i>';
+        } else {
+            nav.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        }
     }
 
     // Event listeners
-    menuToggle.addEventListener('click', function(e) {
+    menuToggle.addEventListener('click', (e) => {
         e.stopPropagation();
         toggleMenu();
     });
 
-    overlay.addEventListener('click', toggleMenu);
+    menuOverlay.addEventListener('click', toggleMenu);
 
     // Handle navigation clicks with improved scrolling
     navLinks.forEach(link => {
@@ -92,8 +100,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Close menu on window resize if open
     window.addEventListener('resize', () => {
-        if (window.innerWidth > 768 && nav.classList.contains('active')) {
-            toggleMenu();
+        if (window.innerWidth > 768) {
+            const nav = document.querySelector('nav');
+            const body = document.body;
+            nav.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            body.classList.remove('menu-open');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
         }
     });
 
