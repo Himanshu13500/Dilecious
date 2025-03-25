@@ -53,7 +53,7 @@ body {
 /* Header Section */
 header {
     background-color: #ffffff;
-    padding: 15px 20px;
+    padding: 10px 20px;
     position: fixed;
     width: 100%;
     top: 0;
@@ -69,39 +69,29 @@ header {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    padding: 10px 0;
+    padding: 5px 0;
     text-align: center;
     background: white;
     border-radius: 10px 10px 0 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 1002;
-    transition: transform 0.3s ease;
-}
-
-.logo-container:hover {
-    transform: translateY(-5px);
 }
 
 .logo {
-    padding: 10px 0;
+    padding: 5px 0;
 }
 
 .logo img {
-    height: 50px;
+    height: 40px;
     vertical-align: middle;
-    transition: transform 0.3s ease;
-}
-
-.logo:hover img {
-    transform: scale(1.1);
 }
 
 .nav-container {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    padding: 15px;
+    padding: 10px;
     background: white;
     border-radius: 0 0 10px 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -111,14 +101,14 @@ header {
 
 nav {
     width: 100%;
-    padding: 10px 0;
+    padding: 5px 0;
     display: block !important;
 }
 
 .nav-table {
     width: 100%;
     border-collapse: separate;
-    border-spacing: 10px;
+    border-spacing: 8px;
 }
 
 .nav-table td {
@@ -130,12 +120,12 @@ nav a {
     text-decoration: none;
     color: #4a3f35;
     font-weight: 500;
-    font-size: 0.95em;
-    padding: 12px 15px;
+    font-size: 0.9em;
+    padding: 8px 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     background: rgba(196, 164, 132, 0.1);
     border-radius: 8px;
     transition: all 0.3s ease;
@@ -143,55 +133,54 @@ nav a {
 
 nav a:hover {
     background: rgba(196, 164, 132, 0.2);
-    transform: translateY(-2px);
 }
 
 nav a i {
-    font-size: 1.1em;
+    font-size: 1em;
     color: #c4a484;
 }
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
     header {
-        padding: 10px;
+        padding: 5px 10px;
     }
 
     .logo-container, .nav-container {
-        padding: 10px;
+        padding: 5px;
     }
 
     .logo img {
-        height: 40px;
+        height: 35px;
     }
 
     nav {
-        padding: 8px 0;
+        padding: 5px 0;
         display: block !important;
     }
 
     .nav-table {
-        border-spacing: 8px;
+        border-spacing: 6px;
     }
 
     nav a {
-        font-size: 0.9em;
-        padding: 10px 12px;
+        font-size: 0.85em;
+        padding: 6px 10px;
     }
 }
 
 @media (max-width: 480px) {
     .logo img {
-        height: 35px;
+        height: 30px;
     }
 
     nav a {
-        font-size: 0.85em;
-        padding: 8px 10px;
+        font-size: 0.8em;
+        padding: 5px 8px;
     }
 
     nav a i {
-        font-size: 1em;
+        font-size: 0.9em;
     }
 }
 
@@ -1272,24 +1261,24 @@ footer::before {
 /* Mobile Responsive Improvements */
 @media (max-width: 768px) {
     header {
-        padding: 10px;
+        padding: 5px 10px;
     }
 
     .logo img {
-        height: 40px;
+        height: 35px;
     }
 
     nav {
-        padding: 8px 0;
+        padding: 5px 0;
     }
 
     .nav-table {
-        border-spacing: 8px;
+        border-spacing: 6px;
     }
 
     nav a {
-        font-size: 0.9em;
-        padding: 10px 12px;
+        font-size: 0.85em;
+        padding: 6px 10px;
     }
 
     .flavor-card {
@@ -2018,4 +2007,15 @@ body.menu-open {
     position: static !important;
     width: auto !important;
     height: auto !important;
+}
+
+/* Adjust hero section margin to account for header */
+.highlight {
+    margin-top: 120px;
+}
+
+/* Ensure proper spacing for all sections */
+section {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
