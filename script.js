@@ -167,9 +167,11 @@ document.addEventListener("DOMContentLoaded", function () {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simple form validation
+            // Get form values
             const name = this.querySelector('input[name="name"]').value.trim();
             const email = this.querySelector('input[name="email"]').value.trim();
+            const phone = this.querySelector('input[name="phone"]').value.trim();
+            const subject = this.querySelector('select[name="subject"]').value;
             const message = this.querySelector('textarea[name="message"]').value.trim();
             
             // Email validation regex
@@ -191,33 +193,23 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             
             if (isValid) {
-                // Simulate form submission
-                const submitButton = this.querySelector('button[type="submit"]');
-                const originalText = submitButton.innerHTML;
+                // Format WhatsApp message
+                const whatsappMessage = 
+                    `*New Contact Form Message*\n\n` +
+                    `👤 *Name:* ${name}\n` +
+                    `📧 *Email:* ${email}\n` +
+                    `📱 *Phone:* ${phone || 'Not provided'}\n` +
+                    `📝 *Subject:* ${subject}\n\n` +
+                    `💬 *Message:*\n${message}`;
                 
-                // Show loading state
-                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-                submitButton.disabled = true;
+                // Open WhatsApp with the properly encoded message
+                window.open(`https://wa.me/919404863858?text=${encodeURIComponent(whatsappMessage)}`, '_blank');
                 
-                // Simulate server request
-                setTimeout(() => {
-                    // Success state
-                    submitButton.innerHTML = '<i class="fas fa-check"></i> Sent Successfully!';
-                    submitButton.style.backgroundColor = '#22c55e';
-                    
-                    // Reset form
-                    this.reset();
-                    
-                    // Reset button after delay
-                    setTimeout(() => {
-                        submitButton.innerHTML = originalText;
-                        submitButton.disabled = false;
-                        submitButton.style.backgroundColor = '';
-                    }, 3000);
-                    
-                    // Show toast notification
-                    showToast('Your message has been sent successfully!', 'success');
-                }, 1500);
+                // Reset form
+                this.reset();
+                
+                // Show success message
+                showToast('Message sent via WhatsApp!', 'success');
             } else {
                 showToast(errorMessage, 'error');
             }
